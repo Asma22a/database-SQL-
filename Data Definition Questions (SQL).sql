@@ -3,37 +3,46 @@ use task
 go
 
 
---Create a table named "Employees" with columns for ID (integer), Name (varchar), and Salary (decimal).
+-- 1 Create a table named "Employees" with columns for ID (integer), Name (varchar), and Salary (decimal).
 CREATE TABLE Employees (
 ID INT ,
 Name VARCHAR(100),
 Salary DECIMAL(7,2),
 )
---Add a new column named "Department" to the "Employees" table with data type varchar(50).
+-- 2 Add a new column named "Department" to the "Employees" table with data type varchar(50).
 ALTER TABLE Employees 
 ADD Department VARCHAR(50)
 GO
---Remove the "Salary" column from the "Employees" table.
+-- 3 Remove the "Salary" column from the "Employees" table.
 ALTER TABLE Employees
 DROP COLUMN Salary
 GO
---Rename the "Department" column in the "Employees" table to "DeptName".
+-- 4 Rename the "Department" column in the "Employees" table to "DeptName".
 EXEC sp_rename 'Employees.Department',  'DeptName', 'COLUMN'
 GO
---Create a new table called "Projects" with columns for ProjectID (integer) and ProjectName (varchar).
+-- 5 Create a new table called "Projects" with columns for ProjectID (integer) and ProjectName (varchar).
 CREATE TABLE Projects (
 ProjectID INT,
 ProjectName VARCHAR(100),
 )
---Add a primary key constraint to the "Employees" table for the "ID" column.
+-- 6 Add a primary key constraint to the "Employees" table for the "ID" column.
 ALTER TABLE Employees
 ALTER COLUMN ID INT NOT NULL
 ALTER TABLE Employees
 ADD PRIMARY KEY (ID)
---Create a foreign key relationship between the "Employees" table (referencing "ID") and the "Projects" table (referencing "ProjectID").
-
---Remove the foreign key relationship between "Employees" and "Projects."
---Add a unique constraint to the "Name" column in the "Employees" table.
+-- 7 Create a foreign key relationship between the "Employees" table (referencing "ID") and the "Projects" table (referencing "ProjectID").
+CREATE TABLE Employees_Projects
+ID int,
+ProjectID int ,
+CONSTRAINT FK_ID FOREIGN KEY (ID) REFERENCES Employees(ID),
+CONSTRAINT FK_ProjectID FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID),
+-- 8 Remove the foreign key relationship between "Employees" and "Projects."
+ALTER TABLE Employees_Projects
+DROP CONSTRAINT  FK_ID
+GO
+ALTER TABLE Employees_Projects
+DROP CONSTRAINT  FK_ProjectID
+-- 9 Add a unique constraint to the "Name" column in the "Employees" table.
 ALTER TABLE Employees
 ADD UNIQUE (Name)
 --Create a table named "Customers" with columns for CustomerID (integer), FirstName (varchar), LastName (varchar), and Email (varchar), and Status (varchar).

@@ -45,7 +45,7 @@ DROP CONSTRAINT  FK_ProjectID
 -- 9 Add a unique constraint to the "Name" column in the "Employees" table.
 ALTER TABLE Employees
 ADD UNIQUE (Name)
---Create a table named "Customers" with columns for CustomerID (integer), FirstName (varchar), LastName (varchar), and Email (varchar), and Status (varchar).
+-- 10 Create a table named "Customers" with columns for CustomerID (integer), FirstName (varchar), LastName (varchar), and Email (varchar), and Status (varchar).
 CREATE TABLE Customers (
 CustomerID INT ,
 FirstName VARCHAR(50),
@@ -53,27 +53,27 @@ LastName VARCHAR(50),
 Email VARCHAR(100),
 Status VARCHAR(100),
 )
---Add a unique constraint to the combination of "FirstName" and "LastName" columns in the "Customers" table
+-- 11 Add a unique constraint to the combination of "FirstName" and "LastName" columns in the "Customers" table
 ALTER TABLE Customers
 ADD CONSTRAINT UN_Customers UNIQUE (FirstName,LastName);
---Add a default value of 'Active' for the "Status" column in the "Customers" table, where the default value should be applied when a new record is inserted.
+-- 12 Add a default value of 'Active' for the "Status" column in the "Customers" table, where the default value should be applied when a new record is inserted.
 ALTER TABLE Customers
 ADD CONSTRAINT df_Status
 DEFAULT 'Active' FOR Status
---Create a table named "Orders" with columns for OrderID (integer), CustomerID (integer), OrderDate (datetime), and TotalAmount (decimal).
+-- 13 Create a table named "Orders" with columns for OrderID (integer), CustomerID (integer), OrderDate (datetime), and TotalAmount (decimal).
 CREATE TABLE OrderS (
 OrderID INT,
 CustomerID INT,
 OrderDate DATETIME,
 TotalAmount DECIMAL,
 )
---Add a check constraint to the "TotalAmount" column in the "Orders" table to ensure that it is greater than zero.
+-- 14 Add a check constraint to the "TotalAmount" column in the "Orders" table to ensure that it is greater than zero.
 ALTER TABLE OrderS
 ADD CHECK (TotalAmount>0)
---Create a schema named "Sales" and move the "Orders" table into this schema.
+-- 15 Create a schema named "Sales" and move the "Orders" table into this schema.
 GO 
 CREATE SCHEMA Sales
 ALTER SCHEMA Sales
 TRANSFER dbo.OrderS
---Rename the "Orders" table to "SalesOrders."
+-- 16 Rename the "Orders" table to "SalesOrders."
 EXEC sp_rename 'Sales.OrderS','SalesOrders'
